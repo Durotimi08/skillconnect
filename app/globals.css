@@ -23,3 +23,7 @@
   width: 100vw;
   max-width: 100vw;
 }
+.skills{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
