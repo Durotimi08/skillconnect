@@ -1,19 +1,52 @@
+"use client"
 import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
 import globe from "../public/assets/icons/globe_1x-removebg-preview.png"
 import pencil from "../public/assets/icons/pencil.png"
 import personal from "../public/assets/icons/people3.png"
+import people from "../public/assets/icons/people.png"
+import star from "../public/assets/icons/people4.png"
+import skillData from "../app/skillData"
 
+interface search {
+  value: string;
+}
 export default function Home() {
+  const [searched, setSearched] = useState<search>({
+    value: ""
+  })
+  const [modal, setModal] = useState<boolean>(false)
+  const [data, setData] = useState<string[]>([])
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearched((prevData) => ({value: value }));
+  };
+  const handlemodal = () =>{
+    setModal((prevData) => (!prevData))
+  }
+  React.useEffect(() => {
+    titles.map((each)=> (setData(prevData => (prevData.concat(skillData[each])))))
+     console.log(true, searched)
+  },[searched])
+  const titles = Object.keys(skillData)
+  const topTitles = titles.slice(0, 8)
   return (
    <main className='w-full h-full flex flex-col'>
     <section className='bg-csecondary grid place-items-center p-12 pb-4'>
-      <header className='bg-ctertiary border-white border-8 px-4 py-10 grid place-items-center gap-12 w-full max-w-[1000px]'>
+      <header className='bg-ctertiary border-white border-8 px-4 pt-10 pb-5 grid place-items-center gap-14 w-full max-w-[1000px]'>
         <span className='font-bowlbyrope text-white text-6xl w-auto'>SkillConnect</span>
         <span className='font-manrope text-white text-xl w-auto'>Master any craft with skillconnect</span>
       </header>
-      <section className='flex p-1 pl-4 mt-8 gap-3 w-full max-w-[700px] items-center'>
-        <input type="text" placeholder='Explore our skill libary' className='h-11 w-full rounded-md text-black bg-white outline-none placeholder-black px-4 font-inter text-sm'/>
+      <section className='flex mt-8 gap-3 w-full max-w-[700px] items-center relative'>
+        <input type="text" onChange={handleInputChange} onFocus={handlemodal} onBlur={handlemodal} placeholder='Explore our skill libary' className='h-11 w-full rounded-md text-black bg-white outline-none placeholder-black px-4 font-inter text-sm'/>
         <button className='h-10 bg-cprimary grid place-items-center px-4 rounded-md font-inter text-black text-sm'>Search</button>
+        {modal ? (
+          <section className='w-[100%] rounded-md h-[200px] bg-white absolute top-14 left-0 shadow-md py-2 grid grid-rows-5'>
+            {data.slice(0,5).map((each) => {return (
+            <div className="w-full hover:bg-opacity-20 hover:bg-cprimary px-4 font-inter text-sm flex items-center">{each}</div>
+            )})}
+          </section>
+          ) : (<a></a>)}
       </section>
       <section className='flex w-full max-w-[850px] mt-14'>
         <button className='w-full max-w-xs h-10 bg-cprimary grid place-items-center rounded-3xl mr-auto'>
@@ -25,27 +58,33 @@ export default function Home() {
       </section>
     </section>
     <section className='bg-cprimary max-w-full p-9 grid place-items-center'>
-      <article className='w-[1000px] grid place-items-center max-w-full'>
+      <article className='w-full grid place-items-center max-w-[1000px]'>
         <h1 className='font-bowlbyrope text-4xl text-ctertiary mt-4'>
           Embrace the revolution
         </h1>
-        <section className='mt-5 flex items-center'>
+        <section className='mt-7 flex items-center gap-10'>
+          <Image
+          src={globe}
+          width={500}
+          height={500}
+          alt='skillconnect'
+          className='mt-6 bg-white rounded-xl px-8 pt-7 pb-8 w-[300px]' 
+          />
           <article className='w-full'>
-            <p className='mt-4 p-4 bg-white rounded-xl text-sm shadow-md shadow-ctertiary'>Eager to learn how to bake French baguettes or fix a leaky faucet? Maybe you’ve been wondering how to meditate or play the guitar? Well, get ready to strike a pose, strum away, or whip up a cordon bleu dinner! SkillConnect is the answer.</p>
-            <p className='mt-4 p-4 bg-white rounded-xl text-sm shadow-md shadow-ctertiary'>Tap into the collective intelligence of your community — swap, blend, mix, and learn! You’re about to become one ridiculously versatile human being.</p>
-            <p className='mt-4 p-4 bg-white rounded-xl text-sm shadow-md shadow-ctertiary'>Our easy-to-use platform is intuitively designed, providing visual feedback at every step. Plus, with options for user preferences, you can rest easy knowing you’re in good hands.</p>
+            <p className='mt-5 p-4 bg-white rounded-xl text-sm shadow-ctertiary'>Eager to learn how to bake French baguettes or fix a leaky faucet? Maybe you’ve been wondering how to meditate or play the guitar? Well, get ready to strike a pose, strum away, or whip up a cordon bleu dinner! SkillConnect is the answer.</p>
+            <p className='mt-5 p-4 bg-white rounded-xl text-sm shadow-ctertiary'>Tap into the collective intelligence of your community — swap, blend, mix, and learn! You’re about to become one ridiculously versatile human being.</p>
+            <p className='mt-5 p-4 bg-white rounded-xl text-sm shadow-ctertiary'>Our easy-to-use platform is intuitively designed, providing visual feedback at every step. Plus, with options for user preferences, you can rest easy knowing you’re in good hands.</p>
           </article>
-          <div className='w-[600px] grid place-items-end'>
-            <Image
-            src={globe}
-            width={320}
-            height={320}
-            alt='skillconnect'
-            />
-          </div>
         </section>
       </article>
-      <article className='w-[1000px] grid place-items-center max-w-full mt-[100px]'>
+      <article className='w-full grid place-items-center max-w-[1000px] mt-[100px] relative'>
+        <Image
+            src={star}
+            width={120}
+            height={120}
+            className='absolute right-0 top-0 -translate-y-1/3'
+            alt='skillconnect'
+        />
         <header className='w-auto max-w-[500px] text-center flex flex-col gap-6 items-center'>
           <Image
             src={pencil}
@@ -61,13 +100,13 @@ export default function Home() {
           <button className='bg-ctertiary px-8 py-2 font-inter text-white text-lg rounded-lg mt-6'>Get Started</button>
         </div>
       </article>
-      <article className='w-[1000px] flex gap-8 max-w-full mt-[130px] h-[340px] bg-white rounded-xl relative'>
+      <article className='w-full flex gap-8 max-w-[1000px] mt-[130px] h-[340px] bg-white rounded-xl relative'>
         <section className='absolute -left-[40px] -top-[40px] bg-csecondary rounded-xl grid place-items-center px-5 w-[380px] shadow-md shadow-csecondary'>
           <Image
             src={personal}
-            width={340}
-            height={300}
-            className="rotate-[10deg]"
+            width={540}
+            height={500}
+            className="rotate-[10deg] w-[340px]"
             alt='skillconnect'
             />
         </section>
@@ -79,19 +118,55 @@ export default function Home() {
           <span className='flex gap-3 mt-6'><svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" role="img"><path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.015 16.114l-7.039 4.578a1.908 1.908 0 01-2.079 0l-7.039-4.578A1.908 1.908 0 013 14.512V4.907A1.907 1.907 0 014.907 3h14.059a1.908 1.908 0 011.907 1.907v9.605a1.908 1.908 0 01-.858 1.602z" clip-rule="evenodd"></path><path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.939 5.33l1.392 3.596 3.854.21-2.995 2.441.992 3.73-3.243-2.1-3.243 2.1 1.002-3.73-3.005-2.442 3.863-.21 1.383-3.595z" clip-rule="evenodd"></path></svg><span className='font-adamina text-md'>Secure User Authentication</span></span>
         </section>
       </article>
-      <article className='w-[1100px] max-w-full mt-[130px] gap-10'>
-        <h1 className='font-adamina text-black text-4xl p-4 text-center'>Browse skills by category</h1>
-        <div className="w-full h-[2px] bg-black mb-10"></div>
+      <article className='w-full max-w-[1100px] mt-[130px] gap-10'>
+        <h1 className='text-4xl p-4 text-center font-bowlbyrope text-csecondary mb-10'>Popular Categories</h1>
         <section className=' gap-8 w-full skills'>
-          <div className='bg-neutral-300 bg-opacity-40 rounded-xl p-6 h-fit'>
-            <span></span>
-            <span className='flex items-center gap-3'><svg className='h-6 w-6' xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" role="img"><path fill="#09bc8a" fill-rule="evenodd" vector-effect="non-scaling-stroke" stroke="#09bc8a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.142 3.813l1.782 4.802 4.927.275c.243.013.477.104.672.26.194.156.338.37.415.615.077.245.082.508.015.756a1.288 1.288 0 01-.391.633L16.726 14.4l1.282 4.993c.06.252.047.517-.038.76a1.285 1.285 0 01-.437.606c-.2.15-.439.234-.684.24a1.174 1.174 0 01-.693-.21L12 17.976 7.854 20.77a1.175 1.175 0 01-.69.214 1.178 1.178 0 01-.684-.233 1.283 1.283 0 01-.441-.599 1.36 1.36 0 01-.047-.757l1.272-4.972-3.826-3.268a1.288 1.288 0 01-.391-.633 1.349 1.349 0 01.015-.756 1.28 1.28 0 01.415-.615c.195-.156.429-.247.672-.26l4.927-.275 1.782-4.802c.092-.24.25-.446.454-.59a1.177 1.177 0 011.376-.001c.204.145.361.35.454.59z" clip-rule="evenodd"></path></svg><span>10k</span></span>
-          </div>
+          {topTitles.map((tit) => {
+            return (
+              <div className='bg-neutral-300 bg-opacity-40 rounded-xl p-6 h-[137px] hover:bg-opacity-80 hover:bg-neutral-100' key={tit}>
+                <span className='font-bowlbyrope text-md cursor-default'>{tit}</span>
+                <div className="w-full h-[1px] bg-csecondary my-3"></div>
+                <span className='flex items-center gap-3'><svg className='h-6 w-6' xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" role="img"><path fill="#09bc8a" fill-rule="evenodd" vector-effect="non-scaling-stroke" stroke="#09bc8a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.142 3.813l1.782 4.802 4.927.275c.243.013.477.104.672.26.194.156.338.37.415.615.077.245.082.508.015.756a1.288 1.288 0 01-.391.633L16.726 14.4l1.282 4.993c.06.252.047.517-.038.76a1.285 1.285 0 01-.437.606c-.2.15-.439.234-.684.24a1.174 1.174 0 01-.693-.21L12 17.976 7.854 20.77a1.175 1.175 0 01-.69.214 1.178 1.178 0 01-.684-.233 1.283 1.283 0 01-.441-.599 1.36 1.36 0 01-.047-.757l1.272-4.972-3.826-3.268a1.288 1.288 0 01-.391-.633 1.349 1.349 0 01.015-.756 1.28 1.28 0 01.415-.615c.195-.156.429-.247.672-.26l4.927-.275 1.782-4.802c.092-.24.25-.446.454-.59a1.177 1.177 0 011.376-.001c.204.145.361.35.454.59z" clip-rule="evenodd"></path></svg><span className='font-medium cursor-default'>{skillData[tit].length + " skills"}</span></span>
+              </div>
+              )
+          })}
+        </section>
+      </article>
+      <article className='w-full max-w-[1000px] mt-[170px] h-fit flex'>
+        <section className='w-full h-auto rounded-l-xl bg-neutral-100 py-9 px-11 flex flex-col gap-12'>
+          <h1 className='font-adamina text-6xl text-csecondary leading-snug'>Why you should join us?</h1>
+          <article className='grid grid-cols-2 gap-6 w-full h-full'>
+            <div className='h-[120px] border-cprimary border-[1px] rounded-xl w-full hover:bg-cprimary hover:bg-opacity-20 flex flex-col p-4 pb-2'>
+              <span className="w-6 h-6 rounded-[50%] border-[1px] border-cprimary mb-auto ml-auto"></span>
+              <span className='font-bowlbyrope text-2xl text-ctertiary cursor-default'>Gather knowledge</span>
+            </div>
+            <div className='h-[120px] border-cprimary border-[1px] rounded-xl w-full hover:bg-cprimary hover:bg-opacity-20 flex flex-col p-4 pb-2'>
+              <span className="w-6 h-6 rounded-[50%] border-[1px] border-cprimary mb-auto ml-auto"></span>
+              <span className='font-bowlbyrope text-2xl text-ctertiary cursor-default'>Profer solutions</span>
+            </div>
+            <div className='h-[120px] border-cprimary border-[1px] rounded-xl w-full hover:bg-cprimary hover:bg-opacity-20 flex flex-col p-4 pb-2'>
+              <span className="w-6 h-6 rounded-[50%] border-[1px] border-cprimary mb-auto ml-auto"></span>
+              <span className='font-bowlbyrope text-2xl text-ctertiary cursor-default'>Create connections</span>
+            </div>
+            <div className='h-[120px] border-cprimary border-[1px] rounded-xl w-full hover:bg-cprimary hover:bg-opacity-20 flex flex-col p-4 pb-2'>
+              <span className="w-6 h-6 rounded-[50%] border-[1px] border-cprimary mb-auto ml-auto"></span>
+            <span className='font-bowlbyrope text-2xl text-ctertiary cursor-default'>Get guidiance</span>
+            </div>
+          </article>
+        </section>
+        <section className='w-[600px] h-[550px] bg-csecondary rounded-r-xl flex justify-center items-end pb-10'>
+          <Image
+            src={people}
+            width={300}
+            height={300}
+            alt='skillconnect'
+            className='' 
+          />
         </section>
       </article>
       <article></article>
-      <article></article>
     </section>
+    <section className="w-full bg-ctertiary h-[300px]"></section>
    </main>
   )
 }

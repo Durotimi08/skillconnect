@@ -18,12 +18,60 @@
   font-family: "manrope";
   src: url("../public/assets/fonts/Manrope/Manrope-VariableFont_wght.ttf");
 }
-
-.body{
-  width: 100vw;
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+body{
   max-width: 100vw;
+  scroll-behavior: smooth;
 }
 .skills{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.messgrid{
+  grid-template-columns: repeat(4, 1fr);
+}
+.main_feed{
+  height: calc(100% + 55px);
+}
+.search{
+  height: calc(100vh - 80px);
+  z-index: 2;
+}
+.postSc::-webkit-scrollbar{
+  display: none;
+}
+.searp {
+  position: relative;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-size: 1.6em;
+  letter-spacing: 4px;
+  overflow: hidden;
+  background: linear-gradient(90deg, #004346, #09bc8a, #004346);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  animation: animate 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(0, 65, 69, 0);
+}
+
+@keyframes animate {
+  0% {
+    background-position: -500%;
+  }
+  100% {
+    background-position: 500%;
+  }
 }

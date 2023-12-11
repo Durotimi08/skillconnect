@@ -2,9 +2,9 @@ interface SkillCategory {
     [category: string]: string[];
 }
   
-const exampleCategory: SkillCategory = {
-    "Technical Skills": [
-      "Data Scientist",
+const skillData: SkillCategory = {
+    "Technology and IT Skills": [
+      "Data Scientist", 
       "Data Analyst",
       "Front-end Developer",
       "Back-end Developer",
@@ -23,7 +23,7 @@ const exampleCategory: SkillCategory = {
       "Mason",
       "Automotive Mechanic"
     ],
-    "Creative and Design": [
+    "Creativity and Design": [
       "Fashion Designer",
       "Graphic Designer",
       "Interior Designer",
@@ -45,7 +45,7 @@ const exampleCategory: SkillCategory = {
       "Marketing Specialist",
       "Sales Representative"
     ],
-    "Health and Wellness": [
+    "Health, Nutrition and Wellness": [
       "Nutritionist",
       "Fitness Trainer",
       "Yoga Instructor",
@@ -129,4 +129,4 @@ const exampleCategory: SkillCategory = {
       "Video Editor"
     ]
 };
-  
+export default skillData
