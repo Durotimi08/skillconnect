@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <main className="w-[700px] h-full p-2 flex flex-col gap-3">
         <Calender />
-        <Pending />
+        <Pending />   
         <Accounts />
     </main>
   )

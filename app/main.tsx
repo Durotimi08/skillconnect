@@ -82,14 +82,14 @@ const Main = () => {
                                 src={imag}
                                 width={20}
                                 height={20}
-                                className="w-7 h-7 p-1 hover:bg-ctertiary rounded-[50%] cursor-pointer"
+                                className="w-7 h-7 p-1 hover:bg-ctertiary rounded-[50%] cursor-pointer transition-all"
                                 alt='skillconnect'
                             />
                             <Image
                                 src={poll}
                                 width={20}
                                 height={20}
-                                className="w-7 h-7 p-1 hover:bg-ctertiary rounded-[50%] cursor-pointer"
+                                className="w-7 h-7 p-1 hover:bg-ctertiary rounded-[50%] cursor-pointer transition-all"
                                 alt='skillconnect'
                             />
                         </div>

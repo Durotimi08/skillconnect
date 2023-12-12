@@ -1,0 +1,211 @@
+1. User:
+   - UserID (Primary Key)
+   - Username
+   - Email
+   - Password
+   - Profile Information (Bio, Location, etc.)
+   - skills (array 1st index= mainskill)
+   - Join Date
+   - Active
+   - Last login
+   - Profile Image
+
+2. Tweet:
+   - TweetID (Primary Key)
+   - UserID (Foreign Key referencing User)
+   - Content (obect 2keys 2key=media i.e(list))
+   - Timestamp
+   - Likes Count
+
+3. Comment:
+    - commentId (Primary key)
+    - tweetId (foreigh key)
+    - Content (obect 2keys 2key=media i.e(list))
+    - Timestamp
+    - Likes Count
+
+3. Skill:
+   - SkillID (Primary Key)
+   - Skill Name
+   - Description
+   - Category
+
+4. Course:
+   - CourseID (Primary Key)
+   - cousercode (primary key)
+   - Title
+   - Description
+   - SkillID (Foreign Key referencing Skill)
+   - InstructorUserID (Foreign Key referencing User)
+   - Duration
+
+  Level:
+    levelid (primarykey)
+    courseid (foreign key)
+
+
+5. Enrollment:
+   - EnrollmentID (Primary Key)
+   - UserID (Foreign Key referencing User)
+   - CourseID (Foreign Key referencing Course)
+   - Enrollment Date
+
+6. Follow:
+   - FollowID (Primary Key)
+   - FollowerUserID (Foreign Key referencing User)
+   - FollowingUserID (Foreign Key referencing User)
+   - Follow Date
+
+8. Lesson:
+   - LessonID (Primary Key)
+   - levelID (Foreign Key referencing Course)
+   - Title
+   - Content(array with object with a type and value)
+   - Timestamp
+
+9. StudentProgress:
+   - ProgressID (Primary Key)
+   - UserID (Foreign Key referencing User)
+   - CourseID (Foreign Key referencing Course)
+   - LessonID (Foreign Key referencing Lesson)
+   - CompletionStatus (e.g., completed, in-progress)
+   - Timestamp
+
+10. AssignmentFromteacher:
+    - AssignmentID (Primary Key)
+    - LessonID (Foreign Key referencing Course)
+    - Title
+    - Description
+    - Deadline
+    - Timestamp
+
+10. Assignmentfromstudents:
+    - AssignmentID (Primary Key)
+    - LessonID (Foreign Key referencing lesson)
+    - content (type)
+    - Deadline
+    - Timestamp
+
+11. LiveSession:
+    - LiveSessionID (Primary Key)
+    - LessonID (Foreign Key referencing Lesson can be null)
+    - type()
+    - Title
+    - Description
+    - Start Time
+    - End Time
+    - ModeratorUserID (Foreign Key referencing User)
+
+12. LiveSessionParticipant:
+    - ParticipantID (Primary Key)
+    - LiveSessionID (Foreign Key referencing LiveSession)
+    - UserID (Foreign Key referencing User)
+    - videovisible
+    - Mute
+    - castScreeen
+
+13. AudioSession:
+    - AudioSessionID (Primary Key)
+    - CourseID (Foreign Key referencing Course)
+    - Title
+    - Description
+    - Start Time
+    - End Time
+    - ModeratorUserID (Foreign Key referencing User)
+    - AudioStreamURL (for live audio)
+
+14. AudioSessionParticipant:
+    - ParticipantID (Primary Key)
+    - AudioSessionID (Foreign Key referencing AudioSession)
+    - UserID (Foreign Key referencing User)
+
+17. VideoSessionRecording:
+    - RecordingID (Primary Key)
+    - VideoSessionID (Foreign Key referencing VideoSession)
+    - ModeratorUserID (Foreign Key referencing User)
+    - Start Time
+    - End Time
+    - VideoFileURL (for the recorded video)
+
+18. VideoClip:
+    - ClipID (Primary Key)
+    - lessonID (Foreign Key referencing Course)
+    - Title
+    - Description
+    - Duration
+    - ModeratorUserID (Foreign Key referencing User)
+    - Timestamp
+
+19. CourseVideoClipMapping:
+    - MappingID (Primary Key)
+    - CourseID (Foreign Key referencing Course)
+    - ClipID (Foreign Key referencing VideoClip)
+
+20. Notification:
+    - NotificationID (Primary Key)
+    - UserID (Foreign Key referencing User)
+    - Content
+    - Timestamp
+    - IsRead (Boolean)
+
+21. Message:
+    - MessageID (Primary Key)
+    - SenderUserID (Foreign Key referencing User)
+    - ReceiverUserID (Foreign Key referencing User)
+    - Content
+    - Timestamp
+    - IsRead (Boolean)
+
+22. LiveChatMessage:
+    - MessageID (Primary Key)
+    - LiveSessionID (Foreign Key referencing LiveSession)
+    - SenderUserID (Foreign Key referencing User)
+    - Content
+    - Timestamp
+
+23. VideoChatMessage:
+    - MessageID (Primary Key)
+    - LiveSessionID (Foreign Key referencing VideoSession)
+    - SenderUserID (Foreign Key referencing User)
+    - Content
+    - Timestamp
+
+24. AudioChatMessage:
+    - MessageID (Primary Key)
+    - AudioSessionID (Foreign Key referencing AudioSession)
+    - SenderUserID (Foreign Key referencing User)
+    - Content
+    - Timestamp
+
+25. MultimediaMessage:
+    - MessageID (Primary Key)
+    - SenderUserID (Foreign Key referencing User)
+    - ReceiverUserID (Foreign Key referencing User)
+    - ContentType (e.g., "Text", "Image", "Video")
+    - Content (Text for Text messages, URL for Image/Video)
+    - Timestamp
+    - IsRead (Boolean)
+
+26. LiveSessionMultimediaMessage:
+    - MessageID (Primary Key)
+    - LiveSessionID (Foreign Key referencing LiveSession)
+    - SenderUserID (Foreign Key referencing User)
+    - ContentType (e.g., "Text", "Image", "Video")
+    - Content (Text for Text messages, URL for Image/Video)
+    - Timestamp
+
+27. VideoSessionMultimediaMessage:
+    - MessageID (Primary Key)
+    - VideoSessionID (Foreign Key referencing VideoSession)
+    - SenderUserID (Foreign Key referencing User)
+    - ContentType (e.g., "Text", "Image", "Video")
+    - Content (Text for Text messages, URL for Image/Video)
+    - Timestamp
+
+28. AudioSessionMultimediaMessage:
+    - MessageID (Primary Key)
+    - AudioSessionID (Foreign Key referencing AudioSession)
+    - SenderUserID (Foreign Key referencing User)
+    - ContentType (e.g., "Text", "Image", "Video")
+    - Content (Text for Text messages, URL for Image/Video)
+    - Timestamp

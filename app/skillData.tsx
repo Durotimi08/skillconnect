@@ -13,7 +13,11 @@ const skillData: SkillCategory = {
       "DevOps Engineer",
       "Cloud Architect",
       "Database Administrator",
-      "UI/UX Designer"
+      "UI/UX Designer",
+      "System Administrator",
+      "Network Engineer",
+      "IT Support Specialist",
+      "Cybersecurity Analyst"
     ],
     "Craftsmanship and Trades": [
       "Carpenter",
@@ -64,12 +68,6 @@ const skillData: SkillCategory = {
       "Chemist",
       "Physicist",
       "Geologist"
-    ],
-    "Technology and IT": [
-      "System Administrator",
-      "Network Engineer",
-      "IT Support Specialist",
-      "Cybersecurity Analyst"
     ],
     "Finance and Accounting": [
       "Accountant",
