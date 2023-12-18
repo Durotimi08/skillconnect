@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image"
 import Navbar from "../navbar"
 import Main from "../main"
@@ -9,7 +10,7 @@ import woman from "../home/woman.jpg"
 
 const dashboard = () => {
   return (
-    <main className="w-full h-[100vh] flex flex-col bg-ctertiary">
+    <main className="w-full h-[100vh] flex flex-col bg-ctertiary overflow-hidden">
         <Navbar />
         <section className="h-full flex pl-2 pb-2">
             <div className="w-72 h-full bg-neutral-300 bg-opacity-20 rounded-md max-h-full pt-10">
@@ -60,25 +61,10 @@ const dashboard = () => {
                                                 />
                                             </div>
                                         </article>
-                                        <p className="w-full bg-ctertiary h-[1px] my-2"></p>
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="rounded-xl w-full h-10 bg-ctertiary flex items-center p-1">
-                                            <article className=" mr-2">
-                                                <Image
-                                                    src={woman}
-                                                    width={50}
-                                                    height={50}
-                                                    alt='skillconnect'
-                                                    className='w-10 rounded-xl' 
-                                                />
-                                            </article>
-                                            <button className="w-full mr-auto flex-col flex">
-                                                <span className="text-[0.7rem] text-white">Abdullahi micheal</span>
-                                                <span className="text-[0.65rem] text-white">You: How are you doing</span>
-                                            </button>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div className="absolute left-3 right-5 bottom-0 bg-black flex items-center px-4 rounded-t-2xl h-10 rounded-b-md">
+                                    <span className="font-manrope text-md text-white">Messages</span>
                                 </div>
                             </div>
                         </section>

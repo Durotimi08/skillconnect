@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { z, ZodError } from 'zod';
 import globe from "C:/Users/toshiba/Documents/coding/work/skillconnect/public/assets/icons/businesswoman-giving-presentation.png";
 import google from "C:/Users/toshiba/Documents/coding/work/skillconnect/public/assets/icons/icons8-google-48.png";
-import facebook from "C:/Users/toshiba/Documents/coding/work/skillconnect/public/assets/icons/download.png";
-import github from "C:/Users/toshiba/Documents/coding/work/skillconnect/public/assets/icons/download (1).png";
+import {firebaseAuth} from "../utils/FirebaseConfig.js"
 import Image from 'next/image';
+import { GoogleAuthProvider } from 'firebase/auth/cordova';
+import { signInWithPopup } from 'firebase/auth';
 
 const schema = z.object({
   email: z.string().email(),
@@ -13,7 +14,7 @@ const schema = z.object({
 });
 
 type FormInput = z.infer<typeof schema>;
-const AuthForm = () => {
+const AuthForm = ({ params }: { params: { slug: string } }) => {
   const [formData, setFormData] = useState<FormInput>({
     email: '',
     password: '',
@@ -33,12 +34,15 @@ const AuthForm = () => {
       const result = schema.safeParse(formData)
       if(!result.success){
         const formatted = result.error.format()
-        console.log(formatted.email?._errors, formatted.password?._errors)
         if(formatted.email?._errors){
           setIsEmailValid(false)
+        }else{
+          setIsEmailValid(true)
         }
         if(formatted.password?._errors){
           setIsPasswordValid(false)
+        } else{
+          setIsPasswordValid(true)
         }
         setFormValid(false)
       } else{
@@ -52,8 +56,14 @@ const AuthForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const submitLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(formData);
+  };
+
+  const handleGoogle = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const provider = new GoogleAuthProvider();
+    const { user } = await signInWithPopup(firebaseAuth, provider);
+    alert(user)
   };
 
 
@@ -106,9 +116,9 @@ const AuthForm = () => {
           <button
             type='submit'
             disabled={!formValid}
-            onClick={onSubmit}
+            onClick={submitLogin}
             className={`w-full max-w-[350px] h-12 ${
-              formValid ? 'bg-cprimary' : 'bg-neutral-500'
+              formValid ? 'bg-cprimary' : 'bg-neutral-500 cursor-not-allowed'
             } rounded-[40px] text-center mt-14 font-manrope text-white text-lg`}
           >
             Continue
@@ -118,33 +128,16 @@ const AuthForm = () => {
           <div className='h-[50%] w-full flex flex-col items-center'>
             <button className='w-full max-w-[350px] h-12 bg-black rounded-[40px] text-center font-manrope text-white text-lg mt-5'>Register</button>
             <p className='my-5 cursor-default'>OR</p>
-            <div className="flex justify-around w-[200px]">
-              <button>
+            <div className="flex justify-around">
+              <button className="flex bg-[lightblue] rounded-3xl py-[0.35rem] px-6 gap-4 items-center justify-center" onClick={handleGoogle}>
                 <Image
                   src={google}
-                  width={50}
-                  height={50}
+                  width={30}
+                  height={30}
                   alt='google'
-                  priority
+                  className='w-30 h-30'
                 />
-              </button>
-              <button>
-                <Image
-                  src={facebook}
-                  width={50}
-                  height={50}
-                  alt='facebook'
-                  priority
-                />
-              </button>
-              <button>
-                <Image
-                  src={github}
-                  width={50}
-                  height={50}
-                  alt='github'
-                  priority
-                />
+                <span className="text-ctertiary font-inter">Continue with google</span>
               </button>
             </div>
           </div>
