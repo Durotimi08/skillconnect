@@ -75,3 +75,22 @@ body{
     background-position: 500%;
   }
 }
+.trans{
+  transition: 700ms;
+}
+.profi{
+  position: relative;
+  border-radius: 50%;
+  box-shadow: -3px -3px 7px #ffffff73,
+              3px 3px 5px rgba(94,104,121,0.288);
+}
+.profi:before{
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: #dde1e7;
+  border-radius: 50%;
+  box-shadow: inset -3px -3px 7px #ffffff73,
+              inset 3px 3px 5px rgba(94,104,121,0.288);
+}
