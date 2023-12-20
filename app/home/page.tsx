@@ -6,6 +6,7 @@ import Sidebar from "../sidebar"
 import write from "../../public/assets/icons/icons8-write-24.png"
 import plus from "../../public/assets/icons/icons8-plus-24.png"
 import search from "../../public/assets/icons/icons8-search-30.png"
+import messa from "../../public/assets/icons/icons8-up-32.png"
 import woman from "../home/woman.jpg"
 
 const dashboard = () => {
@@ -63,8 +64,15 @@ const dashboard = () => {
                                         </article>
                                     </div>
                                 </div>
-                                <div className="absolute left-3 right-5 bottom-0 bg-black flex items-center px-4 rounded-t-2xl h-10 rounded-b-md">
-                                    <span className="font-manrope text-md text-white">Messages</span>
+                                <div className="absolute left-3 right-5 bottom-0 bg-black flex items-center px-4 rounded-t-2xl h-10 rounded-b-md cursor-pointer">
+                                    <span className="font-manrope text-md text-white mr-auto">Messages</span>
+                                    <Image
+                                        src={messa}
+                                        width={50}
+                                        height={50}
+                                        alt='skillconnect'
+                                        className='w-5' 
+                                    />
                                 </div>
                             </div>
                         </section>

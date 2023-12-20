@@ -2,7 +2,7 @@ import Image from "next/image"
 import woman from "../home/woman.jpg"
 const Accounts = () => {
   return (
-    <section className="h-full w-full flex flex-col gap-5 mt-8 pl-3 max-h-[250px] bg-neutral-300 bg-opacity-20 rounded-xl p-2 py-4">
+    <section className="h-full w-full flex flex-col gap-5 mt-8 pl-3 max-h-[250px] rounded-xl p-2 py-4">
         <article className="pr-1">
             <h1 className="text-neutral-200 font-manrope text-xl mb-2">Connect with others</h1>
             <p className="w-full bg-neutral-300 h-[1px]"></p>
