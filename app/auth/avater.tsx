@@ -1,14 +1,17 @@
 import Image from "next/image"
 import {FaCamera} from "react-icons/fa"
-import React, { useState } from "react";
+import React, { FocusEvent, useState, useEffect, ChangeEvent } from "react";
 import ContextMenu from "../common/ContextMenu";
 import PhotoPicker from "../common/PhotoPicker";
+import PhotoLibrary from "../common/PhotoLibrary";
+import CapturePhoto from "../common/CapturePhoto";
 
 type Props = {
     type: string;
     image: any;
-    setImage: (val: { email: string; password: string; firstname: string; lastname: string; image: any; }) => void;
+    setImage: any;
 }
+
 interface coor {
     x: number;
     y: number
@@ -16,6 +19,8 @@ interface coor {
 const Avater = ({ setImage, image, type } : Props) => {
   const [hover, setHover] = useState<boolean>(false)
   const [grabPhoto, setGrabPhoto] = useState<boolean>(false)
+  const [showPhotoLibary, setShowPhotoLibary] = useState<boolean>(false)
+  const [showCapturePhoto, setShowCapturePhoto] = useState<boolean>(false)
   const [isContextMenuVisible, setIsContextMenuVisible] = useState<boolean>(false)
   const [contextMenuCoordinate, setContextMenuCoordinate] = useState<coor>({
     x: 0,
@@ -26,16 +31,46 @@ const Avater = ({ setImage, image, type } : Props) => {
     setIsContextMenuVisible(true)
   }
   const contextMenuOptions = [
-    {name: "Take Photo", callback: ()=>{}},
-    {name: "Choose From Libary", callback: ()=>{}},
+    {name: "Take Photo", callback: ()=>{
+      setShowCapturePhoto(true)
+    }},
+    {name: "Choose From Libary", callback: ()=>{
+      setShowPhotoLibary(true)
+    }},
     {name: "Upload Photo", callback: ()=>{
-        setGrabPhoto(true)
+      setGrabPhoto(true)
     }}
   ]
-
-    const photoPickerChange = () => {
-
+  useEffect(()=>{
+    if(grabPhoto){
+      const data = document.getElementById("photo-picker")
+      data?.click()
+      document.body.onfocus = (e) => {
+        setTimeout(()=>{
+          setGrabPhoto(false)
+        },1000)
+      }
     }
+  },[grabPhoto])
+  const photoPickerChange = async (e: any) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    const data = document.createElement("img");
+    let dataSrc: string = '';
+  
+    reader.onload = function (event) {
+      dataSrc = event.target?.result as string;
+      data.setAttribute("data-src", dataSrc);
+      data.setAttribute("src", dataSrc);
+    };
+  
+    reader.readAsDataURL(file);
+  
+    setTimeout(() => {
+      setImage((val: any) => ({ ...val, image: dataSrc }));
+    }, 100);
+  };
+  
   return (
     <>
     <section>
@@ -66,6 +101,8 @@ const Avater = ({ setImage, image, type } : Props) => {
         </div>
         )}
     </section>
+    {showCapturePhoto && <CapturePhoto  setImage={setImage} hideCapturePhoto={setShowCapturePhoto} />}
+    {showPhotoLibary && <PhotoLibrary setImage={setImage} hidePhotoLibary={setShowPhotoLibary} />}
     {grabPhoto && <PhotoPicker onChange={photoPickerChange} />}
     {isContextMenuVisible && (<ContextMenu options={contextMenuOptions} coordinates={contextMenuCoordinate} contextMenu={isContextMenuVisible} setContextMenu={setIsContextMenuVisible} hov={setHover} />)}
     </>

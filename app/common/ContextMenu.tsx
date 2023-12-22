@@ -15,16 +15,13 @@ function ContextMenu({options, coordinates, setContextMenu, contextMenu, hov}: P
   const handleClick = (e: React.MouseEvent, callback:any) => {
     e.stopPropagation();
     setContextMenu(false);
-    hov(false)
     callback()
   }
-  hov(true)
   useEffect(()=>{
     const handleOutsideClick = (event: any) => {
       if(event.target.id !== "context-opener"){
         if(contextMenuRef.current && !contextMenuRef.current.contains(event.target)){
           setContextMenu(false)
-          hov(false)
         }
       }
     }

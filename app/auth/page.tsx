@@ -5,7 +5,7 @@ import globe from "C:/Users/toshiba/Documents/coding/work/skillconnect/public/as
 import google from "C:/Users/toshiba/Documents/coding/work/skillconnect/public/assets/icons/icons8-google-48.png";
 import Hide from "../../public/assets/icons/icons8-closed-eye-24.png"
 import Show from "../../public/assets/icons/icons8-eye-30.png"
-import {firebaseAuth} from "../utils/FirebaseConfig.js"
+import {firebaseAuth} from "../utils/FirebaseConfig"
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { GoogleAuthProvider } from 'firebase/auth/cordova';

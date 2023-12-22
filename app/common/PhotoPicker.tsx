@@ -1,8 +1,11 @@
-import ReactDom from "react-dom";
+"use client";
+import React, { useState } from "react";
+import { createPortal } from "react-dom";
 
-function PhotoPicker({onChange} :any) {
-  const component = (<input type="file" hidden id="photo-picker" onChange={onChange}/>)
-  return ReactDOM.createPortal(component, document.getElementById("photo-picker-element"));
+export default function PhotoPicker({onChange} :any) {
+  const [portalElement, setPortalElement] = useState<Element | null>(document.getElementById("photo-picker-element"));
+
+  return portalElement 
+  ? createPortal(<input type="file" hidden id="photo-picker" onChange={onChange}/>, portalElement ) 
+  : null
 }
-
-export default PhotoPicker;

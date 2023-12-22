@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
+    "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.4.0",
     "crypto": "^1.0.1",
     "emoji-picker-react": "^4.4.9",
@@ -21,6 +22,7 @@
     "react-dom": "^18",
     "react-icons": "^4.12.0",
     "react-image-file-resizer": "^0.4.8",
+    "react-redux": "^9.0.4",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
     "wavesurfer.js": "^6.6.3",
