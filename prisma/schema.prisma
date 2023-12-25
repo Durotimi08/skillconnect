@@ -198,8 +198,9 @@ model tweet {
 }
 
 model user {
-  UserID       Int      @id
-  Username     String?  @db.VarChar(255)
+  UserID       Int      @id @default(autoincrement())
+  Firstname     String?  @db.VarChar(255)
+  Lastname     String?  @db.VarChar(255)
   Email        String?  @db.VarChar(255)
   Password     String?  @db.VarChar(255)
   Bio          String?  @db.Text

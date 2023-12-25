@@ -67,11 +67,11 @@ const dashboard = () => {
                                 <div className="absolute left-3 right-5 bottom-0 bg-black flex items-center px-4 rounded-t-2xl h-10 rounded-b-md cursor-pointer">
                                     <span className="font-manrope text-md text-white mr-auto">Messages</span>
                                     <Image
-                                        src={messa}
+                                        src="/assets/icons/icons8-up-32.png"
                                         width={50}
                                         height={50}
                                         alt='skillconnect'
-                                        className='w-5' 
+                                        className='w-4' 
                                     />
                                 </div>
                             </div>
