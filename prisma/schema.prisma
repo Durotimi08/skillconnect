@@ -7,243 +7,84 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model assignmentfromstudents {
-  AssignmentID Int      @id
-  LessonID     Int?
-  Content      String?  @db.VarChar(255)
-  Deadline     DateTime @default(now()) @db.Timestamp(0)
-  Timestamp    DateTime @default(now()) @db.Timestamp(0)
+model Post {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  body String
+  published   Boolean   @default(false)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  Comment     Comment[]
+  Like Like[]
 }
 
-model assignmentfromteacher {
-  AssignmentID Int      @id
-  LessonID     Int?
-  Title        String?  @db.VarChar(255)
-  Description  String?  @db.Text
-  Deadline     DateTime @default(now()) @db.Timestamp(0)
-  Timestamp    DateTime @default(now()) @db.Timestamp(0)
+model Comment {
+  id        String   @id @default(cuid())
+  body   String
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model audiochatmessage {
-  MessageID      Int      @id
-  AudioSessionID Int?
-  SenderUserID   Int?
-  Content        String?  @db.VarChar(255)
-  Timestamp      DateTime @default(now()) @db.Timestamp(0)
+model Like {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model audiosession {
-  AudioSessionID  Int      @id
-  CourseID        Int?
-  Title           String?  @db.VarChar(255)
-  Description     String?  @db.Text
-  StartTime       DateTime @default(now()) @db.Timestamp(0)
-  EndTime         DateTime @default(now()) @db.Timestamp(0)
-  ModeratorUserID Int?
-  AudioStreamURL  String?  @db.VarChar(255)
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
-model audiosessionmultimediamessage {
-  MessageID      Int      @id
-  AudioSessionID Int?
-  SenderUserID   Int?
-  ContentType    String?  @db.VarChar(255)
-  Content        String?  @db.VarChar(255)
-  Timestamp      DateTime @default(now()) @db.Timestamp(0)
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model audiosessionparticipant {
-  ParticipantID  Int  @id
-  AudioSessionID Int?
-  UserID         Int?
+model User {
+  id            String    @id @default(cuid())
+  firstname     String?
+  lastname      String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  skills        String?
+  accounts      Account[]
+  sessions      Session[]
+  Post          Post[]
+  Comment       Comment[]
+  Like Like[]
 }
 
-model comment {
-  CommentID  Int      @id
-  TweetID    Int?
-  Content    String?  @db.LongText
-  Timestamp  DateTime @default(now()) @db.Timestamp(0)
-  LikesCount Int?
-}
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-model course {
-  CourseID         Int     @id
-  CourseCode       String? @unique(map: "CourseCode") @db.VarChar(255)
-  Title            String? @db.VarChar(255)
-  Description      String? @db.Text
-  SkillID          Int?
-  InstructorUserID Int?
-  Duration         Int?
-}
-
-model coursevideoclipmapping {
-  MappingID Int  @id
-  CourseID  Int?
-  ClipID    Int?
-}
-
-model enrollment {
-  EnrollmentID   Int      @id
-  UserID         Int?
-  CourseID       Int?
-  EnrollmentDate DateTime @default(now()) @db.Timestamp(0)
-}
-
-model follow {
-  FollowID        Int      @id
-  FollowerUserID  Int?
-  FollowingUserID Int?
-  FollowDate      DateTime @default(now()) @db.Timestamp(0)
-}
-
-model lesson {
-  LessonID  Int      @id
-  LevelID   Int?
-  Title     String?  @db.VarChar(255)
-  Content   String?  @db.LongText
-  Timestamp DateTime @default(now()) @db.Timestamp(0)
-}
-
-model level {
-  LevelID  Int  @id
-  CourseID Int?
-}
-
-model livechatmessage {
-  MessageID     Int      @id
-  LiveSessionID Int?
-  SenderUserID  Int?
-  Content       String?  @db.VarChar(255)
-  Timestamp     DateTime @default(now()) @db.Timestamp(0)
-}
-
-model livesession {
-  LiveSessionID   Int      @id
-  LessonID        Int?
-  Type            String?  @db.VarChar(255)
-  Title           String?  @db.VarChar(255)
-  Description     String?  @db.Text
-  StartTime       DateTime @default(now()) @db.Timestamp(0)
-  EndTime         DateTime @default(now()) @db.Timestamp(0)
-  ModeratorUserID Int?
-}
-
-model livesessionmultimediamessage {
-  MessageID     Int      @id
-  LiveSessionID Int?
-  SenderUserID  Int?
-  ContentType   String?  @db.VarChar(255)
-  Content       String?  @db.VarChar(255)
-  Timestamp     DateTime @default(now()) @db.Timestamp(0)
-}
-
-model livesessionparticipant {
-  ParticipantID Int      @id
-  LiveSessionID Int?
-  UserID        Int?
-  VideoVisible  Boolean?
-  Mute          Boolean?
-  CastScreen    Boolean?
-}
-
-model message {
-  MessageID      Int      @id
-  SenderUserID   Int?
-  ReceiverUserID Int?
-  Content        String?  @db.VarChar(255)
-  Timestamp      DateTime @default(now()) @db.Timestamp(0)
-  IsRead         Boolean?
-}
-
-model multimediamessage {
-  MessageID      Int      @id
-  SenderUserID   Int?
-  ReceiverUserID Int?
-  ContentType    String?  @db.VarChar(255)
-  Content        String?  @db.VarChar(255)
-  Timestamp      DateTime @default(now()) @db.Timestamp(0)
-  IsRead         Boolean?
-}
-
-model notification {
-  NotificationID Int      @id
-  UserID         Int?
-  Content        String?  @db.VarChar(255)
-  Timestamp      DateTime @default(now()) @db.Timestamp(0)
-  IsRead         Boolean?
-}
-
-model skill {
-  SkillID     Int     @id
-  SkillName   String? @db.VarChar(255)
-  Description String? @db.Text
-  Category    String? @db.VarChar(255)
-}
-
-model studentprogress {
-  ProgressID       Int      @id
-  UserID           Int?
-  CourseID         Int?
-  LessonID         Int?
-  CompletionStatus String?  @db.VarChar(255)
-  Timestamp        DateTime @default(now()) @db.Timestamp(0)
-}
-
-model tweet {
-  TweetID    Int      @id
-  UserID     Int?
-  Content    String?  @db.LongText
-  Timestamp  DateTime @default(now()) @db.Timestamp(0)
-  LikesCount Int?
-}
-
-model user {
-  UserID       Int      @id @default(autoincrement())
-  Firstname     String?  @db.VarChar(255)
-  Lastname     String?  @db.VarChar(255)
-  Email        String?  @db.VarChar(255)
-  Password     String?  @db.VarChar(255)
-  Bio          String?  @db.Text
-  Location     String?  @db.VarChar(255)
-  Skills       String?  @db.LongText
-  JoinDate     DateTime @default(now()) @db.Timestamp(0)
-  Active       Boolean?
-  LastLogin    DateTime @default(now()) @db.Timestamp(0)
-  ProfileImage String?  @db.VarChar(255)
-}
-
-model videochatmessage {
-  MessageID      Int      @id
-  VideoSessionID Int?
-  SenderUserID   Int?
-  Content        String?  @db.VarChar(255)
-  Timestamp      DateTime @default(now()) @db.Timestamp(0)
-}
-
-model videoclip {
-  ClipID          Int      @id
-  LessonID        Int?
-  Title           String?  @db.VarChar(255)
-  Description     String?  @db.Text
-  Duration        Int?
-  ModeratorUserID Int?
-  Timestamp       DateTime @default(now()) @db.Timestamp(0)
-}
-
-model videosessionmultimediamessage {
-  MessageID      Int      @id
-  VideoSessionID Int?
-  SenderUserID   Int?
-  ContentType    String?  @db.VarChar(255)
-  Content        String?  @db.VarChar(255)
-  Timestamp      DateTime @default(now()) @db.Timestamp(0)
-}
-
-model videosessionrecording {
-  RecordingID     Int      @id
-  VideoSessionID  Int?
-  ModeratorUserID Int?
-  StartTime       DateTime @default(now()) @db.Timestamp(0)
-  EndTime         DateTime @default(now()) @db.Timestamp(0)
-  VideoFileURL    String?  @db.VarChar(255)
+  @@unique([identifier, token])
 }

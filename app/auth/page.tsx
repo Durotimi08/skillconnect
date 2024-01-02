@@ -1,95 +1,112 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { z, ZodError } from 'zod';
-import {firebaseAuth} from "../utils/FirebaseConfig"
-import { addUser } from "@/redux/features/user-slice";
-import { AppDispatch, RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { GoogleAuthProvider } from 'firebase/auth/cordova';
-import { getRedirectResult, signInWithRedirect } from 'firebase/auth';
+import defaultAva from "../../public/assets/icons/default_avatar.png"
+import React, { useState, useEffect, useCallback } from 'react';
+import { z } from 'zod';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Login from './login';
+import { signIn } from "next-auth/react";
+
 
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
 
-type FormInput = z.infer<typeof schema>;
+interface sign {
+  name: string;
+  signature: boolean
+}
+
+interface formdat {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  skills : sign[];
+  image: any
+}
+
 const AuthForm = () => {
-  const userInfo = useSelector((state: RootState) => state.userReducer);
-  const dispatch = useDispatch<AppDispatch>();
-  const [formData, setFormData] = useState<FormInput>({email: '', password: '', });
+  const [formdata, setFormdata] = useState<formdat>({
+    email: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+    skills: [],
+    image: defaultAva
+  })
   const [register, setRegister] = useState<boolean>(false);
   const [formValid, setFormValid] = useState<boolean>(false);
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-  
-  useEffect(()=>{
-    let word : string | null = searchParams.get("id")
-    if (word === "Oauth"){
-      setRegister(true)
-    }
-  }, [searchParams]) 
-  
+    setFormdata((prevData) => ({ ...prevData, [name]: value }));
+  }, [setFormdata]);
+
+  const togglePasswordVisibility = useCallback(() => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  }, [setShowPassword]);
+
+  const registration = useCallback(() => {
+    setRegister((prevRegister) => !prevRegister);
+  }, [setRegister]);
+
   useEffect(() => {
-      const result = schema.safeParse(formData)
-      if(!result.success){
-        const formatted = result.error.format()
-        if(formatted.email?._errors){
-          setIsEmailValid(false)
-        }else{
-          setIsEmailValid(true)
-        }
-        if(formatted.password?._errors){
-          setIsPasswordValid(false)
-        } else{
-          setIsPasswordValid(true)
-        }
-        setFormValid(false)
-      } else{
-          setIsEmailValid(true)
-          setIsPasswordValid(true)
-          setFormValid(true)
-      }
-  },[formData]);
+    let word: string | null = searchParams.get("Oauth")
+    let goto: string | null = searchParams.get("ref")
+    if (word === "a2627vahdaahhaf9y7238fvakd") { setRegister(true) }
+    if (goto) {router.push(goto)}
+  }, [searchParams]);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  useEffect(() => {
+    const result = schema.safeParse({email: formdata.email, password: formdata.password})
+    if (!result.success) {
+      const formatted = result.error.format()
+      setFormValid(false);
+      setIsEmailValid(!formatted.email?._errors);
+      setIsPasswordValid(!formatted.password?._errors);
+    } else {
+      setFormValid(true);
+      setIsEmailValid(true);
+      setIsPasswordValid(true);
+    }
+  }, [formdata, setIsEmailValid, setIsPasswordValid, setFormValid]);
+
+  const submitLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      const status = await signIn("credentials", {
+        redirect: false,
+        callbackUrl: "http://localhost:3000",
+        ...{email: formdata.email, password: formdata.password}
+      })
+
+      if (status?.ok) router.push("/home")
+
+    } catch (error) {
+      console.log(error)
+    }
   };
 
-  const registration = () => {
-    setRegister(!register);
-  };
-
-  const submitLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(formData);
-  };
-
-  const handleGoogle = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const provider = new GoogleAuthProvider();
-    provider.addScope('profile');
-    provider.addScope('email');
-    await signInWithRedirect(firebaseAuth, provider);
-
-    const result = await getRedirectResult(firebaseAuth);
-    if (result) {
-      const user = result.user;
-      console.log(user)
-    };
-  }
-
-
-  return (    
-    <Login showPassword={showPassword} registration={registration} togglePasswordVisibility={togglePasswordVisibility} submitLogin={submitLogin} handleGoogle={handleGoogle} handleInputChange={handleInputChange} formData={formData} setFormData={setFormData} register={register} setRegister={setRegister} formValid={formValid} isEmailValid={isEmailValid} isPasswordValid={isPasswordValid} />
+  return (
+    <Login
+      showPassword={showPassword}
+      registration={registration}
+      togglePasswordVisibility={togglePasswordVisibility}
+      submitLogin={submitLogin}
+      handleInputChange={handleInputChange}
+      formdata={formdata}
+      setFormdata={setFormdata}
+      register={register}
+      setRegister={setRegister}
+      formValid={formValid}
+      isEmailValid={isEmailValid}
+      isPasswordValid={isPasswordValid}
+    />
   );
 };
 

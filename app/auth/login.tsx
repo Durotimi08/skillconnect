@@ -4,12 +4,15 @@ import google from "C:/Users/toshiba/Documents/coding/work/skillconnect/public/a
 import Hide from "../../public/assets/icons/icons8-closed-eye-24.png"
 import Show from "../../public/assets/icons/icons8-eye-30.png"
 import Register from './register';
+import { signIn } from 'next-auth/react';
 
-const Login = ({registration, showPassword, togglePasswordVisibility, submitLogin, handleGoogle, handleInputChange, formData, register, setRegister, formValid, isEmailValid, isPasswordValid}:any) => {
+const Login = ({registration, showPassword, togglePasswordVisibility, submitLogin, handleInputChange, formdata, setFormdata, register, setRegister, formValid, isEmailValid, isPasswordValid}:any) => {
   return (
     <main className='w-full min-h-[100vh] bg-cprimary relative'>
-      {register && <Register setState={setRegister} state={register} />}
-      <section className='w-full flex'>
+      {register && <Register setState={setRegister} state={register} formdata={formdata} setFormdata={setFormdata}/>}
+      {!register && (
+        <>
+        <section className='w-full flex'>
         <header className='w-full font-adamina text-5xl text-csecondary ml-20 mt-10 leading-[55px] cursor-default'>Connect with others like you and engage in life-changing events.</header>
         <div className='w-[700px] h-[400px] grid place-items-end bg-csecondary overflow-hidden rounded-bl-3xl'>
           <Image
@@ -33,7 +36,7 @@ const Login = ({registration, showPassword, togglePasswordVisibility, submitLogi
             placeholder='Email'
             onChange={handleInputChange}
             name="email"
-            value={formData.email}
+            value={formdata.email}
           />
           <div className="relative w-full max-w-[600px]">
             <input
@@ -44,7 +47,7 @@ const Login = ({registration, showPassword, togglePasswordVisibility, submitLogi
               placeholder='Password'
               onChange={handleInputChange}
               name="password"
-              value={formData.password}
+              value={formdata.password}
             />
             <button
               className="absolute top-[38px] right-3 w-auto bg-white p-2 hover:bg-neutral-300 rounded-[50%]"
@@ -74,7 +77,7 @@ const Login = ({registration, showPassword, togglePasswordVisibility, submitLogi
             <button className='w-full max-w-[350px] h-12 bg-black rounded-[40px] text-center font-manrope text-white text-lg mt-5' onClick={registration}>Register</button>
             <p className='my-5 cursor-default'>OR</p>
             <div className="flex justify-around">
-              <button className="flex bg-[lightblue] rounded-3xl py-[0.35rem] px-6 gap-4 items-center justify-center" onClick={handleGoogle}>
+              <button className="flex bg-[lightblue] rounded-3xl py-[0.35rem] px-6 gap-4 items-center justify-center" onClick={() => signIn("google", { callbackUrl: "http://localhost:3000" })}>
                 <Image
                   src={google}
                   width={30}
@@ -88,6 +91,8 @@ const Login = ({registration, showPassword, togglePasswordVisibility, submitLogi
           </div>
         </article>
       </section>
+      </>
+      )}
     </main>
   )
 }

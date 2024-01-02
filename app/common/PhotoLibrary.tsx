@@ -13,7 +13,7 @@ import Image from "next/image"
 function PhotoLibrary({ setImage, hidePhotoLibary } : any) {
   const images = [avater1, avater2, avater3, avater4, avater5, avater6, avater7, avater8, avater9]
   return (
-    <article className="fixed top-0 left-0 w-full flex justify-center items-center h-full max-h-[100vh] wax-w-[100vw]">
+    <article className="fixed top-0 left-0 w-full flex justify-center items-center h-full max-h-[100vh] wax-w-[100vw] z-10">
       <section className="h-max w-max bg-ctertiary gap-6 p-4 rounded-lg flex flex-col">
         <div className="w-full justify-end flex">
           <IoClose className="w-10 h-10 cursor-pointer text-neutral-200" onClick={()=>hidePhotoLibary(false)} />

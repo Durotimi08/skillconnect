@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import 'react-toastify/dist/ReactToastify.css';
 import './globals.css'
-import ReduxProvider from '@/redux/provider'
+import ClientWrapper from '../helpers/ClientWrapper';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <ReduxProvider>{children}</ReduxProvider>
+        <ClientWrapper>
+            {children}
+        </ClientWrapper>
       <div id="photo-picker-element"></div>
       </body>
     </html>

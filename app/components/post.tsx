@@ -1,13 +1,6 @@
 "use client";
 import Image from "next/image";
-import imag from "../../public/assets/icons/icons8-image-48.png"
 import woman from "../home/woman.jpg"
-import like from "../../public/assets/icons/icons8-love-24.png"
-import liked from "../../public/assets/icons/icons8-love-50.png"
-import comment from "../../public/assets/icons/icons8-comment-50.png"
-import commented from "../../public/assets/icons/icons8-comment-50 (1).png"
-import share from "../../public/assets/icons/icons8-share-30.png"
-import back from "../../public/assets/icons/icons8-arrow-30.png"
 import EachPost from "./eachpost";
 import { useState } from "react";
 
@@ -53,7 +46,7 @@ const Post = () => {
                 <article className="border-neutral-500 border-[1px] flex justify-around items-center h-10">
                     <button className="flex gap-2 items-center text-sm font-adamina text-neutral-300">
                         <Image
-                                src={liked}
+                                src={true ? "/assets/icons/icons8-love-50.png" : "/assets/icons/icons8-love-24.png"}
                                 width={50}
                                 height={50}
                                 alt='skillconnect'
@@ -63,7 +56,7 @@ const Post = () => {
                     </button>
                     <button className="flex gap-2 items-center text-sm font-adamina text-neutral-300">
                         <Image
-                                src={commented}
+                                src={true ? "/assets/icons/icons8-comment-50 (1).png" : "/assets/icons/icons8-comment-50.png"}
                                 width={50}
                                 height={50}
                                 alt='skillconnect'
@@ -73,7 +66,7 @@ const Post = () => {
                     </button>
                     <button className="flex gap-2 items-center text-sm font-adamina text-neutral-300">
                         <Image
-                                src={share}
+                                src="/assets/icons/icons8-share-30.png"
                                 width={50}
                                 height={50}
                                 alt='skillconnect'
@@ -85,35 +78,24 @@ const Post = () => {
             </div>
         </section>
     </article>
-    {modal ? (
+    {modal && (
             <>
-            <section className="absolute bottom-14 left-0 right-0 top-0 bg-ctertiary rounded-xl">
+            <section className="absolute bottom-0 left-0 right-0 top-0 bg-ctertiary rounded-xl">
                 <div className="w-full h-full rounded-xl bg-neutral-300 bg-opacity-20 flex pb-2 pt-2 px-[1px] relative">
                     <div className="absolute left-[50%] -translate-x-1/2 -top-4 w-12 h-12 rounded-[50%] bg-ctertiary cursor-pointer grid place-items-center" onClick={handlechange2}>
                         <Image
-                            src={back}
+                            src="/assets/icons/icons8-arrow-30.png"
                             width={50}
                             height={50}
                             alt='skillconnect'
-                            className='w-5' 
+                            className='w-5 hover:scale-125 transition-all' 
                             />
                     </div>
                     <EachPost />
                 </div>
             </section>
-                    <section className="h-14 absolute bottom-0 left-0 right-0 flex gap-3 items-center px-4 border-t-[1px] border-neutral-500">
-                    <input type="text" className="w-full h-10 rounded-lg outline-none border-[1px] border-white bg-transparent px-3 text-white" placeholder="Enter a comment" />
-                    <Image
-                        src={imag}
-                        width={20}
-                        height={20}
-                        className="w-10 h-10 p-1 hover:bg-ctertiary rounded-[50%] cursor-pointer transition-all"
-                        alt='skillconnect'
-                    />
-                    <div className="w-10 h-10 rounded-[50%] bg-cprimary"></div>
-            </section>
             </>
-    ) : ""}
+    )}
     </>
   )
 }

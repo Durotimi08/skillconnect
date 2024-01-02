@@ -49,31 +49,11 @@ body{
   height: calc(100vh - 80px);
   z-index: 2;
 }
+.post{
+  height: calc(100% - 56px);
+}
 .postSc::-webkit-scrollbar{
   display: none;
-}
-.searp {
-  position: relative;
-  font-family: sans-serif;
-  text-transform: uppercase;
-  font-size: 1.6em;
-  letter-spacing: 4px;
-  overflow: hidden;
-  background: linear-gradient(90deg, #004346, #09bc8a, #004346);
-  background-repeat: no-repeat;
-  background-size: 80%;
-  animation: animate 3s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: rgba(0, 65, 69, 0);
-}
-
-@keyframes animate {
-  0% {
-    background-position: -500%;
-  }
-  100% {
-    background-position: 500%;
-  }
 }
 .trans{
   transition: 700ms;
@@ -93,4 +73,7 @@ body{
   border-radius: 50%;
   box-shadow: inset -3px -3px 7px #ffffff73,
               inset 3px 3px 5px rgba(94,104,121,0.288);
+}
+.profil{
+  height: calc(100% - 16px);
 }

@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+import imag from "../../public/assets/icons/icons8-image-48.png"
+import send from "../../public/assets/icons/icons8-send-30.png"
 import woman from "../home/woman.jpg"
 import like from "../../public/assets/icons/icons8-love-24.png"
 import liked from "../../public/assets/icons/icons8-love-50.png"
@@ -71,7 +73,24 @@ const EachPost = () => {
             </button>
         </article>
     </div>
-    <Post />
+        <Post />
+        <section className="h-14 w-full flex gap-3 items-center px-4 pt-2 border-t-[1px] border-neutral-500">
+            <input type="text" className="w-full h-10 rounded-lg outline-none border-[1px] border-ctertiary bg-transparent px-3 text-white" placeholder="Enter a comment" />
+            <Image
+                src={imag}
+                width={20}
+                height={20}
+                className="w-10 h-10 p-1 hover:bg-ctertiary rounded-[50%] cursor-pointer transition-all"
+                alt='skillconnect'
+            />
+            <Image
+                src={send}
+                width={20}
+                height={20}
+                className="w-8 h-8 hover:h-9 hover:w-9 p-1 hover:bg-ctertiary rounded-[50%] cursor-pointer transition-all"
+                alt='skillconnect'
+            />
+        </section>
     </section>
   )
 }

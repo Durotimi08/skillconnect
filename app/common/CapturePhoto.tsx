@@ -46,7 +46,7 @@ function CapturePhoto({ setImage, hideCapturePhoto } : any) {
   };
 
   return (
-    <section className="absolute h-full w-full top-0 left-0 bg-ctertiary flex gap-3 pt-2 items-center justify-center">
+    <section className="absolute h-full w-full top-0 left-0 bg-ctertiary flex gap-3 pt-2 items-center justify-center z-10">
       <div className="gap-4 flex flex-col items-center">
         <div className="w-full justify-end flex pr-2 pt-2">
           <IoClose className="w-10 h-10 cursor-pointer text-neutral-200" onClick={()=>hideCapturePhoto(false)} />

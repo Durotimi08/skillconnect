@@ -1,11 +1,6 @@
 "use client"
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import globe from "../public/assets/icons/globe_1x-removebg-preview.png"
-import pencil from "../public/assets/icons/pencil.png"
-import personal from "../public/assets/icons/people3.png"
-import people from "../public/assets/icons/people.png"
-import star from "../public/assets/icons/people4.png"
 import skillData from "../app/skillData"
 
 interface search {
@@ -64,7 +59,7 @@ export default function Home() {
         </h1>
         <section className='mt-7 flex items-center gap-10'>
           <Image
-          src={globe}
+          src="/assets/icons/globe_1x-removebg-preview.png"
           width={500}
           height={500}
           alt='skillconnect'
@@ -79,7 +74,7 @@ export default function Home() {
       </article>
       <article className='w-full grid place-items-center max-w-[1000px] mt-[100px] relative'>
         <Image
-            src={star}
+            src="/assets/icons/people4.png"
             width={120}
             height={120}
             className='absolute right-0 top-0 -translate-y-1/3'
@@ -87,7 +82,7 @@ export default function Home() {
         />
         <header className='w-auto max-w-[500px] text-center flex flex-col gap-6 items-center'>
           <Image
-            src={pencil}
+            src="/assets/icons/pencil.png"
             width={30}
             height={10}
             className="rotate-[10deg]"
@@ -103,7 +98,7 @@ export default function Home() {
       <article className='w-full flex gap-8 max-w-[1000px] mt-[130px] h-[340px] bg-white rounded-xl relative'>
         <section className='absolute -left-[40px] -top-[40px] bg-csecondary rounded-xl grid place-items-center px-5 w-[380px] shadow-md shadow-csecondary'>
           <Image
-            src={personal}
+            src="/assets/icons/people3.png"
             width={540}
             height={500}
             className="rotate-[10deg] w-[340px]"
@@ -156,7 +151,7 @@ export default function Home() {
         </section>
         <section className='w-[600px] h-[550px] bg-csecondary rounded-r-xl flex justify-center items-end pb-10'>
           <Image
-            src={people}
+            src="/assets/icons/people.png"
             width={300}
             height={300}
             alt='skillconnect'
